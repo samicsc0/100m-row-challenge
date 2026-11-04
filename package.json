@@ -9,7 +9,14 @@
   "scripts": {
     "prepare": "husky",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "infra:up": "docker compose up -d",
+    "infra:down": "docker compose down",
+    "infra:logs": "docker compose logs -f",
+    "db:ingest": "cat ./apps/data.csv | docker exec -i 100m_postgres psql -U postgres -d events_db -c \"\\copy events(project_id, event_name, user_id, payload, created_at) FROM STDIN WITH (FORMAT csv, HEADER true);\"",
+    "db:generate": "bun --filter api db:generate",
+    "db:migrate": "bun --filter api db:migrate",
+    "db:studio": "bun --filter api db:studio"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.72.1",
