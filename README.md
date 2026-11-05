@@ -1,15 +1,18 @@
-# 100m-row-challenge
+# 100M Row PostgreSQL Challenge
 
-To install dependencies:
+A high-volume event log analytics system built to benchmark PostgreSQL performance at scale using Bun, Hono, and Drizzle ORM.
 
-```bash
-bun install
-```
+## 💻 Test Environment
 
-To run:
+- **Machine:** Lenovo ThinkPad L14 Gen 1
+- **OS:** Ubuntu Linux (KDE Plasma)
+- **CPU:** Intel(R) Core(TM) i5-10310U CPU @ 1.70GHz
+- **RAM:** 15 GB
+- **Engine:** PostgreSQL 16 (Docker)
 
-```bash
-bun run index.ts
-```
+## 📊 Benchmarks (20 Million Rows)
 
-This project was created using `bun init` in bun v1.3.14. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+| Branch / Optimization   | Problem Solved                            | Average Time | p95 Time        |
+| :---------------------- | :---------------------------------------- | :----------- | :-------------- |
+| `main` (Baseline)       | Full table scan (Sequential Read)         | 3,220.20 ms  | **4,741.12 ms** |
+| `optimize/b-tree-index` | Avoids sequential scans via B-Tree lookup | TBD          | TBD             |

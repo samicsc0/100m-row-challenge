@@ -1,11 +1,23 @@
 import { sql, eq } from "drizzle-orm";
 import { db } from "../src/infrastructure/db/connection";
 import { events } from "../src/infrastructure/db/schema";
+import * as os from "os";
 
 async function measurep95() {
   await db.execute(sql`SELECT 1`);
   const iterations = 50;
   const times: number[] = [];
+  const cpu = os.cpus()[0].model.trim();
+  const ramGB = Math.round(os.totalmem() / 1024 ** 3);
+
+  console.log("\n=======================================");
+  console.log("       POSTGRESQL BENCHMARK RUN        ");
+  console.log("=======================================");
+  console.log(`Machine: Lenovo ThinkPad L14 Gen 1`);
+  console.log(`OS:      Ubuntu Linux (KDE Plasma)`);
+  console.log(`CPU:     ${cpu}`);
+  console.log(`RAM:     ${ramGB} GB`);
+  console.log("=======================================\n");
   console.log(`Running ${iterations} queries to establish baseline...`);
   console.log(
     "Warning: This will take a while because we have ZERO indexes.\n",
