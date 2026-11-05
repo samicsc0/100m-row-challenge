@@ -18,10 +18,6 @@ async function measurep95() {
   console.log(`CPU:     ${cpu}`);
   console.log(`RAM:     ${ramGB} GB`);
   console.log("=======================================\n");
-  console.log(`Running ${iterations} queries to establish baseline...`);
-  console.log(
-    "Warning: This will take a while because we have ZERO indexes.\n",
-  );
   for (let i = 0; i < iterations; i++) {
     const start = performance.now();
 
@@ -37,7 +33,7 @@ async function measurep95() {
       `\rCompleted ${i + 1}/${iterations} queries (Last took ${(end - start).toFixed(0)}ms)`,
     );
   }
-  console.log("\n\n--- Baseline Results (No Indexes) ---");
+  console.log("\n\n--- Baseline Results ---");
   times.sort((a, b) => a - b);
 
   const p95Index = Math.floor(times.length * 0.95) - 1;

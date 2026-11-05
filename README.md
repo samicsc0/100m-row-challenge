@@ -15,4 +15,4 @@ A high-volume event log analytics system built to benchmark PostgreSQL performan
 | Branch / Optimization   | Problem Solved                            | Average Time | p95 Time      |
 | :---------------------- | :---------------------------------------- | :----------- | :------------ |
 | `main` (Baseline)       | Full table scan (Sequential Read)         | 424.34 ms    | **588.02 ms** |
-| `optimize/b-tree-index` | Avoids sequential scans via B-Tree lookup | TBD          | TBD           |
+| `optimize/b-tree-index` | Avoids sequential scans via B-Tree lookup | 411.07 ms    | **621.78 ms** |
