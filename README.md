@@ -12,7 +12,8 @@ A high-volume event log analytics system built to benchmark PostgreSQL performan
 
 ## 📊 Benchmarks (20 Million Rows)
 
-| Branch / Optimization   | Problem Solved                            | Average Time | p95 Time      |
-| :---------------------- | :---------------------------------------- | :----------- | :------------ |
-| `main` (Baseline)       | Full table scan (Sequential Read)         | 424.34 ms    | **588.02 ms** |
-| `optimize/b-tree-index` | Avoids sequential scans via B-Tree lookup | 411.07 ms    | **621.78 ms** |
+| Branch / Optimization     | Problem Solved                                | Average Time | p95 Time      |
+| :------------------------ | :-------------------------------------------- | :----------- | :------------ |
+| `main` (Baseline)         | Full table scan (Sequential Read)             | 424.34 ms    | **588.02 ms** |
+| `optimize/b-tree-index`   | Avoids sequential scans via B-Tree lookup     | 411.07 ms    | **621.78 ms** |
+| `optimize/vacuum-analyze` | Visibility Map built for true Index-Only Scan | 414.33 ms    | **502.09 ms** |

@@ -33,7 +33,7 @@ async function measurep95() {
       `\rCompleted ${i + 1}/${iterations} queries (Last took ${(end - start).toFixed(0)}ms)`,
     );
   }
-  console.log("\n\n--- Baseline Results ---");
+  console.log("\n\n--- Results ---");
   times.sort((a, b) => a - b);
 
   const p95Index = Math.floor(times.length * 0.95) - 1;

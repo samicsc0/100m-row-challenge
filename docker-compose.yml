@@ -2,6 +2,7 @@ services:
   db:
     image: postgres:16-alpine
     container_name: 100m_postgres
+    shm_size: 2g
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
