@@ -1,13 +1,12 @@
-import { sql, eq } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { db } from "../src/infrastructure/db/connection";
-import { events } from "../src/infrastructure/db/schema";
 import * as os from "os";
 
 async function measurep95() {
   await db.execute(sql`SELECT 1`);
   const iterations = 50;
   const times: number[] = [];
-  const cpu = os.cpus()[0].model.trim();
+  const cpu = os.cpus()[0]!.model.trim();
   const ramGB = Math.round(os.totalmem() / 1024 ** 3);
 
   console.log("\n=======================================");
@@ -21,10 +20,11 @@ async function measurep95() {
   for (let i = 0; i < iterations; i++) {
     const start = performance.now();
 
-    await db
-      .select({ count: sql<number>`count(*)` })
-      .from(events)
-      .where(eq(events.eventName, "page_view"));
+    await db.execute(sql`
+  SELECT sum(total_events) as count 
+  FROM daily_events_rollup 
+  WHERE event_name = 'page_view'
+`);
 
     const end = performance.now();
     times.push(end - start);
