@@ -17,3 +17,10 @@ A high-volume event log analytics system built to benchmark PostgreSQL performan
 | `main` (Baseline)         | Full table scan (Sequential Read)             | 424.34 ms    | **588.02 ms** |
 | `optimize/b-tree-index`   | Avoids sequential scans via B-Tree lookup     | 411.07 ms    | **621.78 ms** |
 | `optimize/vacuum-analyze` | Visibility Map built for true Index-Only Scan | 414.33 ms    | **502.09 ms** |
+
+## 📊 Benchmarks (100 Million Rows)
+
+| Dataset Size  | Optimization                  | Average Time | p95 Time      |
+| :------------ | :---------------------------- | :----------- | :------------ |
+| **20M Rows**  | B-Tree Index + Visibility Map | 414.33 ms    | 502.09 ms     |
+| **100M Rows** | B-Tree Index + Visibility Map | 453.53 ms    | **524.57 ms** |
