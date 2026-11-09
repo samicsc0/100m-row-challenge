@@ -1,5 +1,11 @@
 # 100M Row Challenge: Enterprise Analytics API
 
+[![Runtime: Bun](https://img.shields.io/badge/Runtime-Bun-fbf0df?logo=bun&logoColor=black)](https://bun.sh/)
+[![Framework: Hono](https://img.shields.io/badge/Framework-Hono-E36002?logo=hono&logoColor=white)](https://hono.dev/)
+[![Database: PostgreSQL 16](https://img.shields.io/badge/Database-PostgreSQL%2016-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![ORM: Drizzle](https://img.shields.io/badge/ORM-Drizzle-C5F74F?logo=drizzle&logoColor=black)](https://orm.drizzle.team/)
+[![Validation: Zod](https://img.shields.io/badge/Validation-Zod-3E67B1?logo=zod&logoColor=white)](https://zod.dev/)
+
 An enterprise-grade Product Analytics API engineered to ingest, store, and query 100 million events with sub-millisecond latency. Built on Bun and PostgreSQL, this project demonstrates database indexing, background concurrency, and load resilience.
 
 ## Architecture & Tech Stack
@@ -10,6 +16,30 @@ An enterprise-grade Product Analytics API engineered to ingest, store, and query
 - **ORM:** Drizzle ORM
 - **Validation:** Zod
 - **Design Pattern:** Clean Architecture
+
+### System Data Flow
+
+The architecture separates write-heavy event ingestion from sub-millisecond query aggregation. Ingestion writes directly to raw storage, while queries read pre-computed rollups updated by a background worker.
+
+```mermaid
+flowchart TD
+    Client["Client / Load Generator"]
+
+    subgraph Ingestion ["Ingestion Path (Write-Heavy)"]
+        Client -->|"POST /events"| API_Write["Hono API (Bun)"]
+        API_Write -->|"Raw COPY / Async INSERT"| PG_Table[("PostgreSQL: events (100M rows)")]
+    end
+
+    subgraph Background ["Background Rollup Worker"]
+        Cron["node-cron (Every 5 mins)"] -->|"REFRESH CONCURRENTLY"| MatView[("daily_events_rollup")]
+        PG_Table -.->|"Periodic Aggregation"| MatView
+    end
+
+    subgraph Query ["Analytics Query Path (O(1) Reads)"]
+        Client -->|"GET /events"| API_Read["Hono API (Bun)"]
+        API_Read -->|"Indexed Lookup (~2ms)"| MatView
+    end
+```
 
 ## Performance Milestones
 
