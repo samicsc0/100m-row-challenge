@@ -1,4 +1,4 @@
-# 100M Row Challenge: Enterprise Analytics API
+# 100M Row Challenge
 
 [![Runtime: Bun](https://img.shields.io/badge/Runtime-Bun-fbf0df?logo=bun&logoColor=black)](https://bun.sh/)
 [![Framework: Hono](https://img.shields.io/badge/Framework-Hono-E36002?logo=hono&logoColor=white)](https://hono.dev/)
