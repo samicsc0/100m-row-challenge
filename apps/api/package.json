@@ -8,7 +8,8 @@
     "dev": "bun run --hot src/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:backup": "docker exec -t 100m_postgres rm -rf /var/lib/postgresql/data/events_backup && docker exec -t 100m_postgres pg_dump -U postgres -d events_db -Fd -j 4 -f /var/lib/postgresql/data/events_backup && docker cp 100m_postgres:/var/lib/postgresql/data/events_backup ./events_backup"
   },
   "devDependencies": {
     "@types/bun": "latest",
